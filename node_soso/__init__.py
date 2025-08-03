@@ -50,6 +50,11 @@ class SmartNode(Element):
 	def __init__(self, element):
 		self.element = element
 
+	def child(self, node_name, create = True):
+		element = self.element.find(node_name)
+		return et.SubElement(self.element, node_name) \
+			if create and element is None else element
+
 	def find(self, path):
 		return self.element.find(path=path)
 
@@ -60,8 +65,8 @@ class SmartNode(Element):
 		el = self.find(path)
 		return None if el is None else el.text
 
-	def attribute_value(self, name):
-		return self.element.attrib[name] if name in self.element.attrib else None
+	def attribute_value(self, name, default = None):
+		return self.element.attrib[name] if name in self.element.attrib else default
 
 	@classmethod
 	def from_element(cls, element):
