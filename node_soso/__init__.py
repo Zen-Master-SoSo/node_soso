@@ -20,6 +20,7 @@
 """
 XML enhancements to make a few things easier.
 """
+import re
 import xml.etree.ElementTree as et
 from xml.etree.ElementTree import Element
 
@@ -44,6 +45,11 @@ def dump(el, depth=0):
 	for c in el:
 		dump(c, depth+1)
 
+def concise_xml(el):
+	spc_between = re.compile('>\s+<')
+	spc_ending = re.compile('\s+\/>')
+	return spc_ending.sub('/>', spc_between.sub('><', et.tostring(el).decode())).strip()
+
 
 class SmartNode(Element):
 
@@ -61,12 +67,16 @@ class SmartNode(Element):
 	def findall(self, path):
 		return self.element.findall(path=path)
 
-	def element_text(self, path):
+	def element_text(self, path, default = None):
 		el = self.find(path)
-		return None if el is None else el.text
+		return default if el is None else el.text
 
 	def attribute_value(self, name, default = None):
 		return self.element.attrib[name] if name in self.element.attrib else default
+
+	@classmethod
+	def from_string(cls, string):
+		return cls(et.fromstring(string))
 
 	@classmethod
 	def from_element(cls, element):
@@ -75,6 +85,9 @@ class SmartNode(Element):
 	@classmethod
 	def from_elements(cls, elements):
 		return [ cls(element) for element in elements ]
+
+	def concise_xml(self):
+		return concise_xml(self.element)
 
 	def dump(self):
 		if self.element is None:
