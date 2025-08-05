@@ -24,7 +24,7 @@ import re
 import xml.etree.ElementTree as et
 from xml.etree.ElementTree import Element
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 
 
 def dump_file(filename):
