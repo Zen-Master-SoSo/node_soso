@@ -62,10 +62,10 @@ class SmartNode(Element):
 			if create and element is None else element
 
 	def find(self, path):
-		return self.element.find(path=path)
+		return self.element.find(path)
 
 	def findall(self, path):
-		return self.element.findall(path=path)
+		return self.element.findall(path)
 
 	def element_text(self, path, default = None):
 		el = self.find(path)
