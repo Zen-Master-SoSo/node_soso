@@ -96,4 +96,25 @@ class SmartNode(Element):
 			dump(self.element)
 
 
+class SmartTree:
+
+	def __init__(self, filename):
+		self.filename = filename
+		self.tree = et.parse(filename)
+		self.element = self.tree.getroot()
+
+	def find(self, path):
+		return self.tree.find(path)
+
+	def findall(self, path):
+		return self.tree.findall(path)
+
+	def dump(self):
+		dump(self.element)
+
+	def print(self):
+		print(et.tostring(self.element).decode())
+
+
+
 #  end node_soso/__init__.py
