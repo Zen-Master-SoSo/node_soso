@@ -53,8 +53,13 @@ def concise_xml(el):
 
 class SmartNode(Element):
 
-	def __init__(self, element):
+	def __init__(self, element, parent = None):
 		self.element = element
+		self._parent = parent
+
+	@property
+	def parent(self):
+		return self._parent
 
 	def child(self, node_name, create = True):
 		element = self.element.find(node_name)
@@ -75,16 +80,16 @@ class SmartNode(Element):
 		return self.element.attrib[name] if name in self.element.attrib else default
 
 	@classmethod
-	def from_string(cls, string):
-		return cls(et.fromstring(string))
+	def from_string(cls, string, parent = None):
+		return cls(et.fromstring(string), parent)
 
 	@classmethod
-	def from_element(cls, element):
-		return cls(element)
+	def from_element(cls, element, parent = None):
+		return cls(element, parent)
 
 	@classmethod
-	def from_elements(cls, elements):
-		return [ cls(element) for element in elements ]
+	def from_elements(cls, elements, parent = None):
+		return [ cls(element, parent) for element in elements ]
 
 	def concise_xml(self):
 		return concise_xml(self.element)

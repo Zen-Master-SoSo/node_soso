@@ -2,9 +2,10 @@
 
 XML enhancements to make a few things easier.
 
-### SmartNode Class
+### SmartNode amd SmartTree classes
 
-Adds easy node value retrieval.
+Adds easy node value retrieval, construction classes which abtract nodes,
+assignment of parent nodes, etc.
 
 ### dump() function
 
